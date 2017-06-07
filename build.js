@@ -1,14 +1,31 @@
 const fs = require('fs');
-const defaultLocation = '~/Northcoders/wk5/Projects';
-const configs = '~/Northcoders/wk5/projectBuilder/defaults'
+const defaultLocation = '/Users/joemulvey/Northcoders/wk5/Projects';
+const configs = '/Users/joemulvey/Northcoders/wk5/projectBuilder/defaults'
+const EventEmitter = require('events');
+
+function standardCB (err) {
+    if (err) {
+        console.log('Shiiiiiiit!!!', err);
+    }
+}
 
 // Task 1 - take input [Project Name] from command line argv and assign to const
+const projName = process.argv[2];
+const termCode = false
 
-// Task 2 - Check if [Project Name] exists in default location
+// Task 2 - async check if [Project Name] exists in default location
+/*
+fs.access(defaultLocation + '/' + projName, fs.constants.R_OK, function (err, res) {
+    if (!err) console.log('Project already exists');
+    termCode = true;
+});
+*/
 
-// Task 3 - go to default location
+// Task 3 - on Task 2 completion, if not already existing, go to default location
 
 // Task 4 - asyc create directory [Project Name] and await callback
+const projDir = defaultLocation + '/' + projName;
+fs.mkdir(projDir,standardCB);
 
 // Task 5 - on Task 4 move into directory [Project Name]
 

@@ -1,24 +1,11 @@
 {
-  "name": "Project Builder",
+  "name": "projectbuilder",
   "version": "1.0.0",
-  "description": "Template for New Projects",
+  "description": "",
   "main": "build.js",
   "scripts": {
-    "test": "mocha ./spec",
-    "lint": "eslint ./",
-    "precommit": "npm run lint && npm test"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "eslint": "^3.19.0",
-    "eslint-plugin-jsx": "0.0.2",
-    "eslint-plugin-react": "^6.10.3",
-    "husky": "^0.13.3",
-    "mocha": "^3.4.2"
-  },
-  "dependencies": {
-    "async": "^2.4.1"
-  }
+  "license": "ISC"
 }

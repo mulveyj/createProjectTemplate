@@ -1,4 +1,5 @@
 const fs = require('fs');
+const exec = require('child_process').exec;
 
 
 function createProject(name) {
@@ -39,6 +40,19 @@ function createProject(name) {
         });
     }
 
+    function executeShellCmd (cmd, dir) {
+        return new Promise (function (resolve) {
+            const ops = {};
+            ops[cwd] = dir;
+            exec(cmd, ops, function (err, stdout, stderr) {
+                if (err) throw new Error (err);
+                if (stdout) console.log(stdout);
+                if (stderr) console.log(stderr);
+            });
+            resolve();
+        });
+    }
+
 Promise.resolve(name)
 // Task 2 - async check if [Project Name] exists in default location
     .then(function (name) {
@@ -66,11 +80,25 @@ Promise.resolve(name)
         makeFile(srcFile, '');
     })
     .then(function () {
+        executeShellCmd('git init', projDir);
+    })
+    .then(function () {
+        executeShellCmd('npm init', projDir);
+    })
+    .then(function () {
         console.log('Amazingly, we\'re there');
     }).catch(function (whatevs) {
         console.log(whatevs);
     });
 }
+
+/*
+    .then(function () {
+        console.log('Amazingly, we\'re there');
+    }).catch(function (whatevs) {
+        console.log(whatevs);
+    });
+*/
 
 createProject(process.argv[2]);
 /*

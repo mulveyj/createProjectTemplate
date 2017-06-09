@@ -4,7 +4,7 @@ const exec = require('child_process').exec;
 
 function createProject(name) {
     const defaultLocation = '/Users/joemulvey/Northcoders/wk5/Projects';
-    const configs = '/Users/joemulvey/Northcoders/wk5/projectBuilder/defaults';
+    // const configs = '/Users/joemulvey/Northcoders/wk5/projectBuilder/defaults';
     // Task 1 - take input [Project Name] from command line argv and assign to const
     // const name = process.argv[2];
     const projDir = defaultLocation + '/' + name;
@@ -40,14 +40,12 @@ function createProject(name) {
         });
     }
 
-    function executeShellCmd (cmd, dir) {
-        return new Promise (function (resolve) {
-            const ops = {};
-            ops[cwd] = dir;
-            exec(cmd, ops, function (err, stdout, stderr) {
+    function executeShellCmd (cmd) {
+        return new Promise (function (resolve, reject) {
+            exec(cmd, function (err, stdout, stderr) {
                 if (err) throw new Error (err);
-                if (stdout) console.log(stdout);
-                if (stderr) console.log(stderr);
+                if (stdout) resolve(stdout);
+                if (stderr) reject(stderr);
             });
             resolve();
         });
@@ -80,10 +78,22 @@ Promise.resolve(name)
         makeFile(srcFile, '');
     })
     .then(function () {
-        executeShellCmd('git init', projDir);
+        const cmd = 'cd ' + projDir + ' && git init';
+        executeShellCmd(cmd);
+    })
+    .then(function (stdout) {
+        console.log(stdout);
+    }, function (stderr) {
+        console.log(stderr);
     })
     .then(function () {
-        executeShellCmd('npm init', projDir);
+        const cmd = 'cd ' + projDir + ' && npm init';
+        executeShellCmd(cmd);
+    })
+    .then(function (stdout) {
+        console.log(stdout);
+    }, function (stderr) {
+        console.log(stderr);
     })
     .then(function () {
         console.log('Amazingly, we\'re there');

@@ -1,8 +1,8 @@
 {
-  "name": "wax-on-wax-off",
+  "name": <<NAME>>,
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": <<MAIN>>,
   "scripts": {
     "test": "mocha ./spec",
     "lint": "eslint ./",

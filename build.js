@@ -1,3 +1,5 @@
+#!/usr/bin/env/ node
+
 // node native module dependncies
 const path = require('path');
 

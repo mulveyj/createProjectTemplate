@@ -1,4 +1,4 @@
-{
+const package = `{
   "name": <<NAME>>,
   "version": "1.0.0",
   "description": "",
@@ -21,4 +21,6 @@
   "dependencies": {
     "async": "^2.4.1"
   }
-}
+}`
+
+module.exports = package;

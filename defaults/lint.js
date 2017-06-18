@@ -1,4 +1,4 @@
-{
+const lint = `{
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
@@ -34,7 +34,8 @@
     "max-statements": [2, 15],
     "max-depth": [2, 2],
     "complexity": [2, 5],
-    "max-len" :[1, 65],
-    "max-params" :[1, 1]
+    "max-len" :[1, 80]
   }
-}
+}`;
+
+module.exports = lint;

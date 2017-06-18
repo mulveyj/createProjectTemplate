@@ -1,6 +1,4 @@
 // node native module dependncies
-
-// const exec = require('child_process').exec;
 const path = require('path');
 
 // project modules
@@ -12,49 +10,54 @@ const gitIgnore = require(path.resolve(__dirname, 'defaults', 'gitIgnore'));
 
 // global variables
 const defaultLoc = path.resolve('..', '..');
-const homeLoc = path.resolve(__dirname);
 
 // project
 function createNewProject(name) {
-    const proj = {homeLoc:homeLoc, 
-                    name: name, 
-                    rootLoc: defaultLoc, 
-                    projDir: defaultLoc + '/' + name, 
-                    specDir:defaultLoc + '/' + name + '/spec/', 
-                    srcDir:defaultLoc + '/' + name + '/src/'};
-    mkdir(proj.projDir)
+    const projDir = defaultLoc + '/' + name;
+    const specDir = defaultLoc + '/' + name + '/spec/';
+    const srcDir = defaultLoc + '/' + name + '/src/';
+    mkdir(projDir)
     .then(() => {
-        mkdir(proj.specDir);
+        //makes the spec directory
+        mkdir(specDir);
     })
     .then(() => {
-        mkdir(proj.srcDir);
+        // makes the src directory
+        mkdir(srcDir);
     })
     .then(() => {
+        // creates the spec file and auto-adds chai dependency
         const content = 'const {expect} = require(\'chai\')';
-        writeFile(proj.specDir + name + '.spec.js', content);
+        writeFile(specDir + name + '.spec.js', content);
     })
     .then(() => {
-        writeFile(proj.srcDir + name + '.js', '');
+        // creates the main js file
+        writeFile(srcDir + name + '.js', '');
     })
     .then(() => {
+        // writes the package.json file and populates with 
+        //  project-specific fields
         const data = packFile
-                    .replace('<<NAME>>', '"' + proj.name + '"')
+                    .replace('<<NAME>>', '"' + name + '"')
                     .replace('<<MAIN>>', 
-                        '"' + proj.srcDir + proj.name + '.js' + '"');
-        writeFile(proj.projDir + '/' + 'package.json', data);
+                        '"' + srcDir + name + '.js' + '"');
+        writeFile(projDir + '/' + 'package.json', data);
     })
     .then(() => {
-        writeFile(proj.projDir + '/' + '.eslintrc', lintFile);
+        // creates a standard linter
+        writeFile(projDir + '/' + '.eslintrc', lintFile);
     })
     .then(() => {
-        cmd('git init', proj.projDir);
+        // initialises git
+        cmd('git init', projDir);
     })
     .then(function (stdout) {
         console.log(stdout);
-        writeFile(proj.projDir + '/' + '.gitignore', gitIgnore);
+        // creates standard .gitignore
+        writeFile(projDir + '/' + '.gitignore', gitIgnore);
     }, console.log)
     .then(() => {
-        cmd('npm install', proj.projDir);
+        cmd('npm install', projDir);
     })
     .then(console.log, console.log)
     .catch(console.log);
